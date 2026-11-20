@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#061329">
+<title>ADM Value Oujda — Sales Battle</title>
+<style>
+:root{--cyan:#18c8ff;--blue:#087bff;--gold:#ffbd32;--ink:#030817;--white:#f7fbff}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020716;color:var(--white);font-family:Arial,Helvetica,sans-serif}
+body{background:radial-gradient(ellipse at 50% 35%,#123d78 0%,#06152e 48%,#020612 100%)}
+body:before{content:"";position:fixed;inset:-30%;pointer-events:none;background:repeating-linear-gradient(112deg,transparent 0 90px,rgba(0,183,255,.09) 92px,transparent 95px 180px);animation:sweep 16s linear infinite}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 20%,rgba(0,180,255,.2),transparent 25%),radial-gradient(circle at 85% 30%,rgba(255,176,28,.13),transparent 23%)}
+@keyframes sweep{to{transform:translateX(12%)}}
+.stage{position:relative;z-index:1;width:100vw;height:100vh;padding:1.8vh 2vw;display:flex;flex-direction:column;gap:1.25vh}
+.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:9vh;gap:12px}
+.brand{font-weight:900;letter-spacing:.04em;font-size:clamp(15px,1.55vw,27px)}
+.brand span{color:#ff6a20}.tag{font-size:clamp(9px,.78vw,14px);letter-spacing:.2em;color:#a9c5e7;margin-top:5px}
+.bf{font-weight:1000;font-size:clamp(23px,3vw,52px);line-height:.9;text-align:center;text-transform:uppercase;text-shadow:0 0 18px #00aaff}
+.bf em{font-style:normal;color:var(--gold)}
+.datebox{justify-self:end;display:flex;align-items:center;gap:9px;border:1px solid rgba(255,190,50,.6);border-radius:14px;padding:9px 12px;background:rgba(6,14,32,.78)}
+.datebox label{font-size:clamp(9px,.75vw,13px);font-weight:900;color:#ffd46c;letter-spacing:.12em}
+input[type=date]{color:#fff;background:#101f3a;border:1px solid #496486;border-radius:8px;padding:8px 9px;font:700 clamp(11px,.9vw,15px) Arial;min-width:130px;color-scheme:dark}
+.headline{text-align:center;font-size:clamp(12px,1.25vw,22px);font-weight:900;letter-spacing:.12em;color:#d9efff;text-transform:uppercase}
+.headline strong{color:var(--gold)}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;min-height:8vh}
+.sum{border:1px solid rgba(255,255,255,.15);border-radius:13px;background:linear-gradient(110deg,rgba(10,38,76,.92),rgba(3,12,29,.9));display:flex;align-items:center;justify-content:center;gap:15px;box-shadow:inset 0 0 18px rgba(255,255,255,.025)}
+.sum b{font-size:clamp(11px,1vw,17px);letter-spacing:.16em;color:#b9d8f5}
+.sum strong{font-size:clamp(25px,3vw,48px);line-height:1;color:#fff;font-variant-numeric:tabular-nums}
+.sum.ftth{border-color:rgba(24,200,255,.55)}.sum.fam{border-color:rgba(255,189,50,.55)}.sum.fsm{border-color:rgba(189,97,255,.55)}
+.sum.ftth strong{color:#48d8ff}.sum.fam strong{color:#ffd16a}.sum.fsm strong{color:#d5a1ff}
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,minmax(0,1fr));gap:1.25vh 1vw}
+.team{position:relative;min-width:0;border:1.5px solid var(--team);border-radius:16px;background:linear-gradient(145deg,rgba(13,33,67,.97),rgba(2,8,22,.96));box-shadow:0 0 17px color-mix(in srgb,var(--team) 25%,transparent),inset 0 0 22px rgba(255,255,255,.035);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8vh;overflow:hidden;padding:1vh .7vw}
+.team.leader{background:linear-gradient(145deg,rgba(77,52,9,.9),rgba(10,18,35,.98));border-color:var(--gold);box-shadow:0 0 24px rgba(255,190,50,.38)}
+.team.selected{outline:2px solid white;outline-offset:-5px}
+.name{font-weight:1000;font-size:clamp(15px,1.65vw,29px);letter-spacing:.08em;text-transform:uppercase;text-shadow:0 2px 8px #000}
+.rank{position:absolute;right:10px;top:8px;color:#ffd35e;font-weight:900;font-size:clamp(9px,.75vw,13px);letter-spacing:.1em}
+.metrics{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:.55vw}
+.metric{min-width:0;text-align:center;border:1px solid rgba(255,255,255,.13);border-radius:10px;background:rgba(0,0,0,.2);padding:.55vh .25vw}
+.metric .label{font-size:clamp(9px,.75vw,13px);font-weight:900;letter-spacing:.13em;color:#b9d6f0}
+.metric .value{font-size:clamp(27px,3.25vw,55px);font-weight:1000;line-height:1.08;font-variant-numeric:tabular-nums}
+.metric.ftth .value{color:#40d5ff;text-shadow:0 0 12px rgba(24,200,255,.4)}
+.metric.fam .value{color:#ffd16a;text-shadow:0 0 12px rgba(255,189,50,.3)}
+.metric.fsm .value{color:#d1a0ff;text-shadow:0 0 12px rgba(189,97,255,.3)}
+.actions{display:flex;justify-content:center;gap:clamp(5px,.7vw,12px);margin-top:.15vh}
+.ctrl{width:clamp(36px,3.6vw,57px);height:clamp(29px,3.4vh,43px);border-radius:8px;border:1px solid rgba(255,255,255,.28);background:#101f39;color:#fff;font-size:clamp(18px,1.55vw,27px);font-weight:900;cursor:pointer;touch-action:manipulation}
+.ctrl.plus{background:var(--team);color:#061020;border-color:#fff}
+.ctrl:focus,input:focus{outline:3px solid white;outline-offset:2px}
+.team.leader .name{color:#ffe09a}
+.bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:6vh}
+.slogan{font-size:clamp(13px,1.5vw,25px);font-weight:1000;letter-spacing:.04em}.slogan span{color:var(--gold)}
+.footer-right{display:flex;align-items:center;gap:10px}
+.help{font-size:clamp(9px,.72vw,12px);color:#b7d4f1;text-align:right;line-height:1.45}
+.reset{border:1px solid rgba(255,189,50,.65);background:rgba(33,23,8,.8);color:#ffd16a;border-radius:9px;padding:9px 12px;font-size:clamp(9px,.75vw,13px);font-weight:900;letter-spacing:.08em;cursor:pointer}
+@media(max-aspect-ratio:4/3){.stage{padding:1vh}.grid{gap:.7vh .6vw}.team{border-radius:10px;padding:.5vh .4vw}.metric{padding:.3vh .1vw}.actions{gap:4px}.ctrl{width:34px;height:29px}}
+</style>
+</head>
+<body>
+<main class="stage">
+<header class="top">
+ <div><div class="brand">ADM <span>VALUE</span> <small style="font-size:.55em;color:#b8d9f5">OUJDA × BOUYGUES TELECOM</small></div><div class="tag">THE SALES ARENA · DAILY PERFORMANCE</div></div>
+ <div class="bf">SALES <em>BATTLE</em></div>
+ <div class="datebox"><label for="day">JOUR J</label><input id="day" type="date" aria-label="Date de suivi"></div>
+</header>
+<div class="headline">6 ÉQUIPES · 3 INDICATEURS · <strong>CHAQUE VENTE COMPTE</strong></div>
+<section class="summary" aria-label="Total du plateau">
+ <div class="sum ftth"><b>TOTAL FTTH</b><strong id="total-ftth">0</strong></div>
+ <div class="sum fam"><b>TOTAL FAM</b><strong id="total-fam">0</strong></div>
+ <div class="sum fsm"><b>TOTAL FSM</b><strong id="total-fsm">0</strong></div>
+</section>
+<section class="grid" id="grid" aria-label="Réalisations du jour par équipe"></section>
+<footer class="bottom">
+ <div class="slogan">ON GARDE L'ÉNERGIE. <span>ON CONCRÉTISE !</span></div>
+ <div class="footer-right"><div class="help"><b>TÉLÉCOMMANDE :</b> flèches pour naviguer · OK pour +1 FTTH<br>Utiliser les boutons + / − de chaque indicateur pour ajuster</div><button class="reset" id="reset">NOUVELLE JOURNÉE / RESET</button></div>
+</footer>
+</main>
+<script>
+const teams=[
+ {name:"ACHILLE",color:"#16a8ff"},{name:"AFOU",color:"#ff7a24"},
+ {name:"GABY",color:"#bd61ff"},{name:"YASSINE",color:"#25d77b"},
+ {name:"ELYSÉE",color:"#16c9ed"},{name:"SANDRINE",color:"#ffbd32"}
+];
+const types=["ftth","fam","fsm"];
+const labels={ftth:"FTTH",fam:"FAM",fsm:"FSM"};
+const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
+const dayInput=document.getElementById("day"); dayInput.value=today();
+let selected=0, data={};
+function emptyDay(){return teams.map(()=>({ftth:0,fam:0,fsm:0}))}
+function key(){return "admOujdaSalesBattle_"+dayInput.value}
+function load(){try{const x=JSON.parse(localStorage.getItem(key()));data=Array.isArray(x)&&x.length===6?x:emptyDay()}catch(e){data=emptyDay()}render()}
+function save(){try{localStorage.setItem(key(),JSON.stringify(data))}catch(e){}}
+function change(i,type,delta){data[i][type]=Math.max(0,(Number(data[i][type])||0)+delta);selected=i;save();render()}
+function render(){
+ const totals={ftth:0,fam:0,fsm:0};
+ data.forEach(row=>types.forEach(t=>totals[t]+=Number(row[t])||0));
+ types.forEach(t=>document.getElementById("total-"+t).textContent=totals[t]);
+ const ranked=data.map((r,i)=>({i,total:types.reduce((s,t)=>s+(Number(r[t])||0),0)}));
+ const max=Math.max(0,...ranked.map(x=>x.total));
+ const grid=document.getElementById("grid");grid.innerHTML="";
+ teams.forEach((team,i)=>{
+  const total=ranked[i].total;
+  const el=document.createElement("article");el.className="team"+(total===max&&max>0?" leader":"")+(i===selected?" selected":"");
+  el.style.setProperty("--team",team.color);
+  let metrics=types.map(t=>`<div class="metric ${t}"><div class="label">${labels[t]}</div><div class="value">${Number(data[i][t])||0}</div><div class="actions"><button class="ctrl" data-i="${i}" data-type="${t}" data-delta="-1" aria-label="Retirer 1 ${t} à ${team.name}">−</button><button class="ctrl plus" data-i="${i}" data-type="${t}" data-delta="1" aria-label="Ajouter 1 ${t} à ${team.name}">+</button></div></div>`).join("");
+  el.innerHTML=`<div class="rank">${total===max&&max>0?"★ EN TÊTE":""}</div><div class="name">${team.name}</div><div class="metrics">${metrics}</div>`;
+  el.addEventListener("click",e=>{selected=i;const b=e.target.closest("button");if(b){change(i,b.dataset.type,Number(b.dataset.delta))}else render()});
+  grid.appendChild(el);
+ });
+}
+dayInput.addEventListener("change",load);
+document.getElementById("reset").addEventListener("click",()=>{if(confirm("Remettre à zéro les réalisations du "+dayInput.value+" ?")){data=emptyDay();save();render()}});
+document.addEventListener("keydown",e=>{
+ if(["ArrowRight","ArrowDown"].includes(e.key)){e.preventDefault();selected=(selected+1)%6;render()}
+ else if(["ArrowLeft","ArrowUp"].includes(e.key)){e.preventDefault();selected=(selected+5)%6;render()}
+ else if(e.key==="Enter"||e.key===" "){if(document.activeElement===dayInput)return;e.preventDefault();change(selected,"ftth",1)}
+ else if(e.key==="Backspace"||e.key==="-"){e.preventDefault();change(selected,"ftth",-1)}
+});
+load();
+</script>
+</body></html>
